@@ -17,7 +17,7 @@ object DummySparepartDatasource {
             description = "Aki bebas perawatan untuk motor harian.",
             price = 750000.0,
             category = "aki",
-            image = 0,
+            image = R.drawable.gears_icon,
             stock = 15,
             tags = listOf("motor", "aki", "battery")
         ),

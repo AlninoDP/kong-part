@@ -9,6 +9,6 @@
     <string name="category">Category</string>
     <string name="description">Description</string>
 
-    <string name="remaining_stocks">Stok Tersedia: %1%d</string>
-    <string name="sale_prices">Harga Jual: %1%d</string>
+    <string name="remaining_stocks">Stok Tersedia: %d</string>
+    <string name="sale_prices">Harga Jual: %.1f</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.aelin.kongpart
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -16,13 +17,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.aelin.kongpart.ui.navigation.NavigationItem
 import com.aelin.kongpart.ui.navigation.Screen
 import com.aelin.kongpart.ui.screen.about.AboutScreen
+import com.aelin.kongpart.ui.screen.detail.DetailScreen
 import com.aelin.kongpart.ui.screen.home.HomeScreen
 import com.aelin.kongpart.ui.theme.KongPartTheme
 
@@ -50,15 +54,31 @@ fun KongPartApp(
             composable(Screen.Home.route) {
                 HomeScreen(
                     navigateToPart = { category ->
+                        Log.d("ASTAGA", "CLICKED  ")
                         navController.navigate(Screen.Part.createRoute(category))
+
                     },
                     navigateToDetail = { category: String, id: Int ->
+                        Log.d("ASTAGA", "CLICKED  ")
                         navController.navigate(Screen.Detail.createRoute(category, id))
                     }
                 )
             }
             composable(Screen.About.route) {
                 AboutScreen()
+            }
+            composable(
+                Screen.Detail.route,
+                arguments = listOf(navArgument("partId") { type = NavType.IntType })
+            ) {
+                val partId = it.arguments?.getInt("partId") ?: -1
+                DetailScreen(
+                    partId = partId,
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
+
             }
         }
     }
