@@ -28,6 +28,7 @@ import com.aelin.kongpart.ui.navigation.Screen
 import com.aelin.kongpart.ui.screen.about.AboutScreen
 import com.aelin.kongpart.ui.screen.detail.DetailScreen
 import com.aelin.kongpart.ui.screen.home.HomeScreen
+import com.aelin.kongpart.ui.screen.part.PartContent
 import com.aelin.kongpart.ui.theme.KongPartTheme
 
 @Composable
@@ -64,6 +65,9 @@ fun KongPartApp(
             }
             composable(Screen.About.route) {
                 AboutScreen()
+            }
+            composable(Screen.Part.route) {
+                PartContent()
             }
             composable(
                 Screen.Detail.route,
