@@ -14,7 +14,7 @@ object DummySparepartDatasource {
         Sparepart(
             id = 1,
             name = "Aki Yuasa MF",
-            description = "Aki bebas perawatan untuk motor harian.",
+            description = "Aki bebas perawatan untuk motor harian. Aki bebas perawatan untuk motor harian. Aki bebas perawatan untuk motor harian.",
             price = 750000.0,
             category = "aki",
             image = R.drawable.gears_icon,

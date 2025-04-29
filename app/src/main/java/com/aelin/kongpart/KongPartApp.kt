@@ -54,12 +54,10 @@ fun KongPartApp(
             composable(Screen.Home.route) {
                 HomeScreen(
                     navigateToPart = { category ->
-                        Log.d("ASTAGA", "CLICKED  ")
                         navController.navigate(Screen.Part.createRoute(category))
 
                     },
                     navigateToDetail = { category: String, id: Int ->
-                        Log.d("ASTAGA", "CLICKED  ")
                         navController.navigate(Screen.Detail.createRoute(category, id))
                     }
                 )
