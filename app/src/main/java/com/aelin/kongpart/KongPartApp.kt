@@ -29,6 +29,7 @@ import com.aelin.kongpart.ui.screen.about.AboutScreen
 import com.aelin.kongpart.ui.screen.detail.DetailScreen
 import com.aelin.kongpart.ui.screen.home.HomeScreen
 import com.aelin.kongpart.ui.screen.part.PartContent
+import com.aelin.kongpart.ui.screen.part.PartScreen
 import com.aelin.kongpart.ui.theme.KongPartTheme
 
 @Composable
@@ -39,9 +40,14 @@ fun KongPartApp(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    val bottomBarRoute = setOf(
+        Screen.Home.route,
+        Screen.About.route
+    )
+
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.Detail.route) {
+            if (currentRoute in bottomBarRoute) {
                 BottomBar(navController)
             }
         },
@@ -66,8 +72,19 @@ fun KongPartApp(
             composable(Screen.About.route) {
                 AboutScreen()
             }
-            composable(Screen.Part.route) {
-                PartContent()
+            composable(
+                Screen.Part.route,
+                arguments = listOf(navArgument("category") {type = NavType.StringType})
+            ) {
+                val category = it.arguments?.getString("category") ?: ""
+
+                PartScreen(
+                    partCategory = category,
+                    navigateToDetail = { partCategory, partId ->
+                        navController.navigate(Screen.Detail.createRoute(partCategory, partId))
+                    }
+                )
+
             }
             composable(
                 Screen.Detail.route,

@@ -32,6 +32,7 @@ import com.aelin.kongpart.model.Sparepart
 import com.aelin.kongpart.ui.ViewModelFactory
 import com.aelin.kongpart.ui.common.UiState
 import com.aelin.kongpart.ui.component.CategoryItem
+import com.aelin.kongpart.ui.component.Search
 
 @Composable
 fun HomeScreen(
@@ -76,7 +77,7 @@ fun HomeContent(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val categories = spareparts.map { it.category.uppercase() }.distinct()
+        val categories = spareparts.map { it.category }.distinct()
 
         var query by remember { mutableStateOf("") }
 
@@ -136,29 +137,4 @@ fun HomeContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Search(
-    query: String,
-    onQueryChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    SearchBar(
-        query = query,
-        onQueryChange = onQueryChange,
-        onSearch = {},
-        active = false,
-        onActiveChange = {},
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null,
-            )
-        },
-        placeholder = { Text(stringResource(R.string.placeholder_search)) },
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .heightIn(min = 48.dp)
-    ) { }
-}
+

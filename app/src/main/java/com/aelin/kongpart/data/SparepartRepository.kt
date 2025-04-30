@@ -19,6 +19,10 @@ class SparepartRepository {
         return flowOf(spareparts)
     }
 
+    fun getSparepartByCategory(category: String): List<Sparepart> {
+        return spareparts.filter { it.category == category }
+    }
+
     fun getSparepartById(id: Int): Sparepart {
         return spareparts.first(){
             it.id == id

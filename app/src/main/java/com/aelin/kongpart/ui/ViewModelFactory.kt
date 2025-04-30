@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.aelin.kongpart.data.SparepartRepository
 import com.aelin.kongpart.ui.screen.detail.DetailViewModel
 import com.aelin.kongpart.ui.screen.home.HomeViewModel
+import com.aelin.kongpart.ui.screen.part.PartViewModel
 
 class ViewModelFactory(private val repository: SparepartRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -16,6 +17,9 @@ class ViewModelFactory(private val repository: SparepartRepository) :
         } else if (
             modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             return DetailViewModel(repository) as T
+        }else if (
+            modelClass.isAssignableFrom(PartViewModel::class.java)) {
+            return PartViewModel(repository) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

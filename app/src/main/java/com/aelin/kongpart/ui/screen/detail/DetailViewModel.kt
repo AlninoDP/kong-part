@@ -9,14 +9,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val repository: SparepartRepository): ViewModel() {
+class DetailViewModel(private val repository: SparepartRepository) : ViewModel() {
 
     private val _uiState: MutableStateFlow<UiState<Sparepart>> = MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState<Sparepart>> get () = _uiState
+    val uiState: StateFlow<UiState<Sparepart>> get() = _uiState
 
-    fun getSparepartById(partId: Int){
+    fun getSparepartById(partId: Int) {
         viewModelScope.launch {
             _uiState.value = UiState.Loading
-            _uiState.value = UiState.Success(repository.getSparepartById(partId))        }
+            _uiState.value = UiState.Success(repository.getSparepartById(partId))
+        }
     }
 }
