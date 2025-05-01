@@ -7,6 +7,6 @@ data class Sparepart (
     val stock: Int,
     val price: Double,
     val category: String,
-    val image: Int,
+    val imageUrl: String,
     val tags: List<String>
 )

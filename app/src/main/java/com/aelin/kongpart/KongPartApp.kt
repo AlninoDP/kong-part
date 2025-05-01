@@ -1,20 +1,27 @@
 package com.aelin.kongpart
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -23,6 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.aelin.kongpart.ui.component.Search
 import com.aelin.kongpart.ui.navigation.NavigationItem
 import com.aelin.kongpart.ui.navigation.Screen
 import com.aelin.kongpart.ui.screen.about.AboutScreen
@@ -51,12 +59,11 @@ fun KongPartApp(
                 BottomBar(navController)
             }
         },
-        modifier = modifier
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.consumeWindowInsets(innerPadding)
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(
@@ -74,7 +81,7 @@ fun KongPartApp(
             }
             composable(
                 Screen.Part.route,
-                arguments = listOf(navArgument("category") {type = NavType.StringType})
+                arguments = listOf(navArgument("category") { type = NavType.StringType })
             ) {
                 val category = it.arguments?.getString("category") ?: ""
 
@@ -82,6 +89,9 @@ fun KongPartApp(
                     partCategory = category,
                     navigateToDetail = { partCategory, partId ->
                         navController.navigate(Screen.Detail.createRoute(partCategory, partId))
+                    },
+                    navigateBack = {
+                        navController.navigateUp()
                     }
                 )
 

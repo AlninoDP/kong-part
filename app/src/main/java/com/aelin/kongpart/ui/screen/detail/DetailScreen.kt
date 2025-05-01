@@ -22,9 +22,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil3.compose.AsyncImage
 import com.aelin.kongpart.R
 import com.aelin.kongpart.di.Injection
 import com.aelin.kongpart.ui.ViewModelFactory
@@ -70,7 +74,7 @@ fun DetailScreen(
                     data.stock,
                     data.price,
                     data.category,
-                    data.image,
+                    data.imageUrl,
                     data.tags,
                     navigateBack
                 )
@@ -88,40 +92,36 @@ fun DetailContent(
     stock: Int,
     price: Double,
     category: String,
-    @DrawableRes image: Int,
+     image: String,
     tags: List<String>,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = Modifier
-            .padding(8.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-
-        // Header
+        // Appbar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(top = 54.dp)
         ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "back",
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .clickable { onBackClick() }
-                    .padding(8.dp)
-            )
+            IconButton(onClick = onBackClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "Back"
+                )
+            }
 
             Text(
                 text = category.replaceFirstChar { it.uppercase() },
-                modifier = Modifier.align(Alignment.Center),
-                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier= modifier.align(Alignment.Center)
             )
+
         }
 
         // Image
@@ -129,17 +129,18 @@ fun DetailContent(
             contentAlignment = Alignment.Center,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(image),
-                contentDescription = name,
-                contentScale = ContentScale.Crop,
+            AsyncImage(
+                model = image,
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
                 modifier = modifier
                     .height(200.dp)
                     .width(200.dp)
                     .clip(RoundedCornerShape(12.dp))
             )
+
         }
 
         // Item Name
@@ -148,7 +149,7 @@ fun DetailContent(
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center,
-            modifier = modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp  ) .fillMaxWidth()
+            modifier = modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp  ) .fillMaxWidth()
         )
 
         // Item Description
@@ -159,7 +160,7 @@ fun DetailContent(
             overflow = TextOverflow.Ellipsis,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, )
+                .padding(horizontal = 16.dp )
         )
 
         Row(
@@ -167,7 +168,7 @@ fun DetailContent(
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
             ItemDetail(
                 title = "Stok",
@@ -193,13 +194,13 @@ fun DetailContent(
         Text(
             text = stringResource(R.string.category),
             style = MaterialTheme.typography.titleMedium,
-            modifier = modifier.padding(start = 8.dp, end = 8.dp)
+            modifier = modifier.padding(horizontal = 16.dp)
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
             DetailCategoryItem(category)
             for (tag in tags) {
@@ -278,7 +279,7 @@ private fun DetailCategoryItemPreview() {
 private fun DetailContentPreview() {
     KongPartTheme {
         DetailContent(
-            image = R.drawable.oil_icon,
+            image = "",
             name = "Yamalube 0.8",
             stock = 10,
             price = 56000.0,

@@ -63,4 +63,8 @@ dependencies {
     // Navigation Component
     implementation(libs.androidx.navigation.compose)
     implementation(libs.navigation.testing)
+
+    // Coil Network Image Loader
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
